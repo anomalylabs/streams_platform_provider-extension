@@ -1,0 +1,9 @@
+{
+    "name": "anomaly/streams_platform_provider-extension",
+    "type": "streams-addon",
+    "autoload": {
+        "psr-4": {
+            "Anomaly\\StreamsPlatformProviderExtension\\": "src/"
+        }
+    }
+}
