@@ -1,12 +1,13 @@
 <?php namespace Anomaly\StreamsPlatformProviderExtension;
 
-use Anomaly\GithubProviderExtension\Command\MakeStreamsPlatformAccessToken;
-use Anomaly\GithubProviderExtension\Command\MakeStreamsPlatformProvider;
+use Anomaly\ApiModule\Provider\Contract\ProviderExtensionInterface;
+use Anomaly\StreamsPlatformProviderExtension\Command\MakeStreamsPlatformAccessToken;
+use Anomaly\StreamsPlatformProviderExtension\Command\MakeStreamsPlatformProvider;
 use Anomaly\Streams\Platform\Addon\Extension\Extension;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
 
-class StreamsPlatformProviderExtension extends Extension
+class StreamsPlatformProviderExtension extends Extension implements ProviderExtensionInterface
 {
 
     /**

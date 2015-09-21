@@ -1,4 +1,4 @@
-<?php namespace Anomaly\GithubProviderExtension\Command;
+<?php namespace Anomaly\StreamsPlatformProviderExtension\Command;
 
 use Anomaly\EncryptedFieldType\EncryptedFieldTypePresenter;
 use Anomaly\SettingsModule\Setting\Contract\SettingRepositoryInterface;
@@ -11,7 +11,7 @@ use League\OAuth2\Client\Token\AccessToken;
  * @link          http://anomaly.is/streams-platform
  * @author        AnomalyLabs, Inc. <hello@anomaly.is>
  * @author        Ryan Thompson <ryan@anomaly.is>
- * @package       Anomaly\GithubProviderExtension\Command
+ * @package       Anomaly\StreamsPlatformProviderExtension\Command
  */
 class MakeStreamsPlatformAccessToken implements SelfHandling
 {

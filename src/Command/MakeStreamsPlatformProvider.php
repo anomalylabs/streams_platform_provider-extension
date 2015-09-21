@@ -1,10 +1,11 @@
-<?php namespace Anomaly\GithubProviderExtension\Command;
+<?php namespace Anomaly\StreamsPlatformProviderExtension\Command;
 
 use Anomaly\EncryptedFieldType\EncryptedFieldTypePresenter;
 use Anomaly\SettingsModule\Setting\Contract\SettingRepositoryInterface;
+use Anomaly\UrlFieldType\UrlFieldTypePresenter;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Http\Request;
-use League\OAuth2\Client\Provider\Github;
+use League\OAuth2\Client\Provider\GenericProvider;
 
 /**
  * Class MakeStreamsPlatformProvider
@@ -12,7 +13,7 @@ use League\OAuth2\Client\Provider\Github;
  * @link          http://anomaly.is/streams-platform
  * @author        AnomalyLabs, Inc. <hello@anomaly.is>
  * @author        Ryan Thompson <ryan@anomaly.is>
- * @package       Anomaly\GithubProviderExtension\Command
+ * @package       Anomaly\StreamsPlatformProviderExtension\Command
  */
 class MakeStreamsPlatformProvider implements SelfHandling
 {
@@ -22,20 +23,25 @@ class MakeStreamsPlatformProvider implements SelfHandling
      *
      * @param SettingRepositoryInterface $settings
      * @param Request                    $request
-     * @return Github
+     * @return GenericProvider
      */
     public function handle(SettingRepositoryInterface $settings, Request $request)
     {
         /* @var EncryptedFieldTypePresenter $clientId */
         /* @var EncryptedFieldTypePresenter $clientSecret */
-        $clientId     = $settings->value('anomaly.extension.github_provider::client_id');
-        $clientSecret = $settings->value('anomaly.extension.github_provider::client_secret');
+        /* @var UrlFieldTypePresenter $clientDomain */
+        $clientId     = $settings->value('anomaly.extension.streams_platform_provider::client_id');
+        $clientSecret = $settings->value('anomaly.extension.streams_platform_provider::client_secret');
+        $clientDomain = $settings->value('anomaly.extension.streams_platform_provider::client_domain');
 
-        return new Github(
+        return new GenericProvider(
             [
-                'clientId'     => $clientId->decrypted(),
-                'clientSecret' => $clientSecret->decrypted(),
-                'redirectUri'  => $request->fullUrl(),
+                'clientId'                => $clientId->decrypted(),
+                'clientSecret'            => $clientSecret->decrypted(),
+                'redirectUri'             => $request->fullUrl(),
+                'urlAuthorize'            => $clientDomain->to('api/authorize'),
+                'urlAccessToken'          => $clientDomain->to('api/token'),
+                'urlResourceOwnerDetails' => $clientDomain->to('api/owner'),
             ]
         );
     }
